@@ -740,6 +740,178 @@
       color: #4338ca;
     }
 
+    /* ---------- Voice-specific ---------- */
+
+    .voice-summary-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .voice-score {
+      display: flex;
+      align-items: baseline;
+      gap: 0.35rem;
+    }
+
+    .voice-score-main {
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+
+    .voice-score-label {
+      font-size: 0.78rem;
+      color: #6b7280;
+    }
+
+    .voice-capability-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.35rem;
+    }
+
+    .cap-chip {
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      font-size: 0.72rem;
+      padding: 0.2rem 0.65rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .cap-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    .cap-dot.limited {
+      background: #f97316;
+    }
+
+    .voice-metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.6rem;
+    }
+
+    .badge-soft {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      padding: 0.1rem 0.55rem;
+      font-size: 0.68rem;
+      color: #6b7280;
+      margin-right: 0.2rem;
+    }
+
+    .dual-transcript {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 0.5rem;
+      font-size: 0.74rem;
+    }
+
+    .dual-transcript-box {
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      padding: 0.5rem 0.55rem;
+    }
+
+    .dual-transcript-label {
+      font-size: 0.7rem;
+      color: #6b7280;
+      margin-bottom: 0.2rem;
+    }
+
+    .dual-transcript-text {
+      color: #111827;
+    }
+
+    .diff-highlight {
+      background: #fee2e2;
+      border-radius: 4px;
+      padding: 0 2px;
+    }
+
+    .persona-pill {
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      padding: 0.22rem 0.7rem;
+      font-size: 0.72rem;
+      display: inline-flex;
+      margin: 0 0.2rem 0.25rem 0;
+      background: #ffffff;
+    }
+
+    .small-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.72rem;
+      margin-top: 0.2rem;
+    }
+
+    .small-table th,
+    .small-table td {
+      padding: 0.25rem 0.3rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .small-table th {
+      text-align: left;
+      color: #6b7280;
+      font-weight: 600;
+    }
+
+    .small-tag {
+      border-radius: 999px;
+      padding: 0.05rem 0.45rem;
+      font-size: 0.65rem;
+      border: 1px solid #d1d5db;
+      background: #f3f4f6;
+    }
+
+    .small-tag.good {
+      border-color: #22c55e;
+      background: #ecfdf5;
+      color: #15803d;
+    }
+
+    .small-tag.bad {
+      border-color: #dc2626;
+      background: #fef2f2;
+      color: #b91c1c;
+    }
+
+    .wallboard-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.4fr);
+      gap: 0.75rem;
+    }
+
+    .wallboard-kpis {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.6rem;
+      margin-bottom: 0.55rem;
+    }
+
+    .wallboard-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.2rem;
+    }
+
     /* ---------- Responsive ---------- */
 
     @media (max-width: 900px) {
@@ -770,6 +942,19 @@
       .analytics-kpi-row,
       .analytics-charts-row,
       .analytics-bottom-row {
+        grid-template-columns: 1fr;
+      }
+
+      .voice-metric-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .dual-transcript {
+        grid-template-columns: 1fr;
+      }
+
+      .wallboard-grid,
+      .wallboard-kpis {
         grid-template-columns: 1fr;
       }
     }
@@ -1207,7 +1392,7 @@
             </div>
           </section>
 
-          <!-- ===== MONITOR TAB (TABLE + FULL-WIDTH ANALYTICS) ===== -->
+          <!-- ===== MONITOR TAB ===== -->
           <section id="tab-monitor" class="tab-panel" hidden>
             <div class="run-table-card">
               <table class="run-table">
@@ -1267,7 +1452,7 @@
               <div class="analytics-header-row">
                 <div class="analytics-header">Run analytics</div>
                 <div class="analytics-header-pill">
-                  View for last 7 days · mock data
+                  Quality &amp; SLO view · last 7 days (mock)
                 </div>
               </div>
 
@@ -1318,7 +1503,7 @@
 
                 <div class="analytics-card-sub">
                   <div class="analytics-subtitle-label">
-                    Pass rate trend
+                    Pass rate trend (chat + voice)
                   </div>
                   <div class="spark-bars">
                     <div class="spark-bar" style="height: 80%;"></div>
@@ -1330,7 +1515,7 @@
                     <div class="spark-bar soft" style="height: 93%;"></div>
                   </div>
                   <div class="spark-caption">
-                    Quality improving as new guardrail pack rolled out.
+                    Quality trend improving as new voice guardrail pack rolled out.
                   </div>
                 </div>
               </div>
@@ -1389,72 +1574,321 @@
             </div>
           </section>
 
-          <!-- ===== VOICE TAB ===== -->
+          <!-- ===== VOICE TAB (BEEFED UP) ===== -->
           <section id="tab-voice" class="tab-panel" hidden>
-            <div class="two-col">
+            <!-- Voice summary -->
+            <div class="card slds-m-bottom_small">
+              <div class="section-title">Voice readiness · All bots</div>
+              <div class="voice-summary-row">
+                <div>
+                  <div class="voice-score">
+                    <span class="voice-score-main">88</span>
+                    <span class="voice-score-label">/100 Voice Quality Index</span>
+                    <span class="small-tag good">Pilot ready</span>
+                  </div>
+                  <p class="slds-text-body_small slds-m-top_xx-small">
+                    Combines latency, ASR accuracy, naturalness, empathy, and safety across all
+                    voice flows (virtual urgent care, billing, and provider search).
+                  </p>
+                </div>
+                <div>
+                  <button class="btn-primary">
+                    Run Full Voice Regression
+                  </button>
+                  <button class="btn-ghost slds-m-left_small">
+                    Compare Chat vs Voice
+                  </button>
+                </div>
+              </div>
+              <div class="voice-capability-chips">
+                <span class="cap-chip">
+                  <span class="cap-dot"></span>Streaming ASR &amp; partial transcripts
+                </span>
+                <span class="cap-chip">
+                  <span class="cap-dot"></span>Barge-in enabled
+                </span>
+                <span class="cap-chip">
+                  <span class="cap-dot"></span>Multi-accent English
+                </span>
+                <span class="cap-chip">
+                  <span class="cap-dot limited"></span>Spanish (beta)
+                </span>
+                <span class="cap-chip">
+                  <span class="cap-dot"></span>Phone &amp; web widgets
+                </span>
+              </div>
+            </div>
+
+            <!-- Conversation quality + pipeline health -->
+            <div class="two-col slds-m-bottom_small">
+              <!-- Left: Conversation Quality -->
               <div>
                 <div class="card">
-                  <div class="section-title">Voice personas</div>
-                  <div class="metric-grid">
+                  <div class="section-title">Conversation flow &amp; naturalness</div>
+                  <p class="slds-text-body_small slds-m-bottom_small">
+                    Metrics derived from real and synthetic calls: talk ratios, silences,
+                    interruptions, and task completion.
+                  </p>
+                  <div class="voice-metric-grid slds-m-bottom_small">
                     <div class="metric-card">
-                      <div class="metric-label">Busy commuter</div>
-                      <p class="slds-text-body_small">
-                        Noisy background, barge-in, short sentences. Stresses STT and
-                        turn-taking.
+                      <div class="metric-label">Talk ratio (caller : bot)</div>
+                      <div class="metric-value">
+                        <strong>46 : 54</strong>
+                        <span class="metric-delta">balanced</span>
+                      </div>
+                      <p class="slds-text-body_small slds-m-top_xx-small">
+                        Good mix of listening and guiding; long monologues are flagged.
                       </p>
                     </div>
                     <div class="metric-card">
-                      <div class="metric-label">Elderly caller</div>
-                      <p class="slds-text-body_small">
-                        Slower pace, asks for repetition. Evaluates empathy and clarity.
+                      <div class="metric-label">Avg turns to resolution</div>
+                      <div class="metric-value">
+                        <strong>7.3</strong>
+                        <span class="metric-delta">virtual urgent care</span>
+                      </div>
+                      <p class="slds-text-body_small slds-m-top_xx-small">
+                        Includes symptom intake, risk checks, and routing to telehealth/ED.
                       </p>
                     </div>
                     <div class="metric-card">
-                      <div class="metric-label">Accented English</div>
-                      <p class="slds-text-body_small">
-                        Mispronounces “cardiologist” and “gastroenterology”; surfaces
-                        mis-recognition hotspots.
+                      <div class="metric-label">Sentiment &amp; empathy score</div>
+                      <div class="metric-value">
+                        <strong>4.5 / 5</strong>
+                        <span class="metric-delta">patients feel heard</span>
+                      </div>
+                      <p class="slds-text-body_small slds-m-top_xx-small">
+                        Measures acknowledgment, apologies, and reassurance in stressful calls.
                       </p>
                     </div>
                   </div>
 
-                  <button class="btn-primary slds-m-top_small">
-                    Run Voice Regression
+                  <div class="metric-card">
+                    <div class="metric-label">What this lab checks</div>
+                    <p class="slds-text-body_small">
+                      • No awkward dead air between sensitive questions<br />
+                      • Smooth topic switches (parking → appointment → MyChart)<br />
+                      • Clear end-of-call summary and next steps
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right: Pipeline Health -->
+              <div>
+                <div class="card">
+                  <div class="section-title">Speech pipeline health</div>
+                  <p class="slds-text-body_small slds-m-bottom_small">
+                    Break down total latency into ASR, reasoning, and TTS. Spot regressions in
+                    any stage of the voice stack.
+                  </p>
+
+                  <div class="metric-card slds-m-bottom_small">
+                    <div class="metric-label">Latency breakdown (p95)</div>
+                    <table class="small-table">
+                      <thead>
+                        <tr>
+                          <th>Stage</th>
+                          <th>p95</th>
+                          <th>Notes</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>ASR</td>
+                          <td>380ms</td>
+                          <td><span class="small-tag good">ok</span></td>
+                        </tr>
+                        <tr>
+                          <td>LLM reasoning</td>
+                          <td>720ms</td>
+                          <td><span class="small-tag good">ok</span></td>
+                        </tr>
+                        <tr>
+                          <td>TTS</td>
+                          <td>310ms</td>
+                          <td><span class="small-tag">longer for empathy blocks</span></td>
+                        </tr>
+                        <tr>
+                          <td><strong>End-to-end</strong></td>
+                          <td><strong>1.9s</strong></td>
+                          <td><span class="small-tag good">within 2.5s SLO</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div class="metric-card">
+                    <div class="metric-label">Barge-in &amp; silence behavior</div>
+                    <p class="slds-text-body_small">
+                      • Barge-in detection: 94% accurate<br />
+                      • False cut-offs: <span class="metric-delta bad">3.1%</span> of calls<br />
+                      • Long-silence events &gt; 3s: 2.4% (mostly on billing flows)
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Robustness + Safety -->
+            <div class="two-col slds-m-bottom_small">
+              <!-- Robustness Lab -->
+              <div>
+                <div class="card">
+                  <div class="section-title">Robustness lab · Noise, accents &amp; devices</div>
+                  <p class="slds-text-body_small slds-m-bottom_small">
+                    Synthetic callers test different microphones, accents, and environments to
+                    ensure the bot still understands the key clinical details.
+                  </p>
+                  <div class="metric-card slds-m-bottom_small">
+                    <div class="metric-label">Environment &amp; accent matrix (sample)</div>
+                    <table class="small-table">
+                      <thead>
+                        <tr>
+                          <th>Scenario</th>
+                          <th>ASR score</th>
+                          <th>Notes</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Quiet room · US accent</td>
+                          <td>98%</td>
+                          <td><span class="small-tag good">baseline</span></td>
+                        </tr>
+                        <tr>
+                          <td>ED hallway · US accent</td>
+                          <td>94%</td>
+                          <td><span class="small-tag good">ok</span></td>
+                        </tr>
+                        <tr>
+                          <td>Car Bluetooth · Indian accent</td>
+                          <td>89%</td>
+                          <td><span class="small-tag">some hospital names off</span></td>
+                        </tr>
+                        <tr>
+                          <td>Speakerphone · Spanish code-switch</td>
+                          <td>84%</td>
+                          <td><span class="small-tag bad">needs tuning</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="metric-card">
+                    <div class="metric-label">Devices covered</div>
+                    <p class="slds-text-body_small">
+                      Mobile dialer, hospital desk phones, web embedded widget, and Teams
+                      softphone. Outliers are auto-queued into new robustness tests.
+                    </p>
+                  </div>
+                  <button class="btn-ghost btn-full slds-m-top_small">
+                    Open Robustness Scenarios
                   </button>
                 </div>
               </div>
 
+              <!-- Safety & Compliance -->
               <div>
                 <div class="card">
-                  <div class="section-title">Voice UX &amp; STT insights</div>
+                  <div class="section-title">Voice safety &amp; compliance</div>
+                  <p class="slds-text-body_small slds-m-bottom_small">
+                    Voice-specific guardrails for PHI, clinical advice, and escalation timing.
+                  </p>
                   <div class="metric-card slds-m-bottom_small">
-                    <div class="metric-label">Voice UX score</div>
-                    <div class="metric-value">
-                      <strong>84</strong
-                      ><span class="metric-delta warn">/100</span>
-                    </div>
-                    <p class="slds-text-body_small slds-m-top_xx-small">
-                      Latency and barge-in are strong; empathy lags in high-anxiety
-                      scenarios.
+                    <div class="metric-label">Guardrail outcomes (last 7 days)</div>
+                    <p class="slds-text-body_small">
+                      • <strong>99.2%</strong> PHI-sensitive prompts handled safely<br />
+                      • <strong>43</strong> unsafe attempts blocked with apology + redirect<br />
+                      • <strong>0</strong> confirmed clinical diagnosis events from bot
                     </p>
                   </div>
                   <div class="metric-card slds-m-bottom_small">
-                    <div class="metric-label">Top mis-recognized phrases</div>
+                    <div class="metric-label">Escalation timing</div>
                     <p class="slds-text-body_small">
-                      “gastroenterology”, “telehealth visit”, “MyChart”. Suggested
-                      vocabulary hints and prompt tweaks ready.
+                      Emergency-signal phrases lead to human handoff within
+                      <strong>&lt; 10 seconds</strong> in 97% of tests. All failures are
+                      auto-logged for clinical review.
                     </p>
                   </div>
                   <div class="metric-card">
-                    <div class="metric-label">Call rhythm</div>
+                    <div class="metric-label">Disclaimers &amp; scripts</div>
                     <p class="slds-text-body_small">
-                      Time-to-first-word: 1.7s · long silences down 23% since last
-                      release.
+                      Ensures “not a substitute for professional medical advice” and “call
+                      911 for emergencies” are clearly spoken before sensitive guidance.
                     </p>
                   </div>
+                  <button class="btn-primary btn-full slds-m-top_small">
+                    Review Voice Safety Report
+                  </button>
+                </div>
+              </div>
+            </div>
 
+            <!-- Real-time voice wallboard & persona packs -->
+            <div class="card">
+              <div class="section-title">Real-time voice wallboard &amp; personas</div>
+              <div class="wallboard-grid">
+                <!-- Left: wallboard snapshot -->
+                <div>
+                  <p class="slds-text-body_small slds-m-bottom_small">
+                    Snapshot from a hypothetical real-time wallboard that you could project in
+                    the contact center or share with operations.
+                  </p>
+                  <div class="wallboard-kpis">
+                    <div class="metric-card">
+                      <div class="metric-label">Active calls (voice bots)</div>
+                      <div class="metric-value">
+                        <strong>18</strong>
+                        <span class="metric-delta">live</span>
+                      </div>
+                    </div>
+                    <div class="metric-card">
+                      <div class="metric-label">At-risk calls</div>
+                      <div class="metric-value">
+                        <strong>3</strong>
+                        <span class="metric-delta bad">negative sentiment</span>
+                      </div>
+                    </div>
+                    <div class="metric-card">
+                      <div class="metric-label">Escalations to human</div>
+                      <div class="metric-value">
+                        <strong>5</strong>
+                        <span class="metric-delta">today</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="metric-card">
+                    <div class="metric-label">Live insights (concept)</div>
+                    <p class="slds-text-body_small">
+                      • Highlight calls where sentiment drops sharply<br />
+                      • Surface repeated phrases like “confusing” or “not clear”<br />
+                      • One click to “promote this call to a regression test”
+                    </p>
+                  </div>
+                  <div class="wallboard-chip-row slds-m-top_small">
+                    <button class="btn-primary">Launch Voice Wallboard</button>
+                    <button class="btn-ghost">View At-Risk Calls</button>
+                  </div>
+                </div>
+
+                <!-- Right: persona packs -->
+                <div>
+                  <div class="metric-card slds-m-bottom_small">
+                    <div class="metric-label">Persona packs (examples)</div>
+                    <span class="persona-pill">Busy commuter · noisy train</span>
+                    <span class="persona-pill">Anxious parent · midnight call</span>
+                    <span class="persona-pill">Elderly caller · slow pace</span>
+                    <span class="persona-pill">Accented English · clinical terms</span>
+                  </div>
+                  <div class="metric-card">
+                    <div class="metric-label">Persona metrics</div>
+                    <p class="slds-text-body_small">
+                      • Empathy score per persona (1–5)<br />
+                      • Script coverage (whether we hit all required questions)<br />
+                      • Drop-off rate (who hangs up or abandons before resolution)
+                    </p>
+                  </div>
                   <button class="btn-ghost btn-full slds-m-top_small">
-                    Open Call Timeline View
+                    Open Persona Test Matrix
                   </button>
                 </div>
               </div>
@@ -1464,70 +1898,98 @@
           <!-- ===== LEARNING TAB ===== -->
           <section id="tab-learning" class="tab-panel" hidden>
             <div class="two-col">
+              <!-- Left: Promote-from-logs Engine -->
               <div>
                 <div class="card">
-                  <div class="section-title">Log clusters (last 7 days)</div>
+                  <div class="section-title">Promote-from-Logs Engine</div>
+                  <p class="slds-text-body_small slds-m-bottom_small">
+                    Mine real UCM conversations in Snowflake / Data Cloud and turn
+                    them into curated test suites with one click.
+                  </p>
+
                   <div class="metric-card slds-m-bottom_small">
-                    <div class="metric-label">“Which campus is that?”</div>
-                    <p class="slds-text-body_small">
-                      8% of chats involve location confusion. 6 new routing tests were
-                      created from these transcripts.
+                    <div class="metric-label">Clusters detected (7 days)</div>
+                    <div class="metric-value">
+                      <strong>19</strong>
+                      <span class="metric-delta">conversation themes</span>
+                    </div>
+                    <p class="slds-text-body_small slds-m-top_xx-small">
+                      Parking confusion · imaging prep · telehealth login ·
+                      insurance coverage changes.
                     </p>
                   </div>
+
                   <div class="metric-card slds-m-bottom_small">
-                    <div class="metric-label">Coverage &amp; benefits</div>
-                    <p class="slds-text-body_small">
-                      Imaging &amp; procedure coverage questions spiked after last
-                      campaign. Billing/coverage suite suggested.
+                    <div class="metric-label">Promoted to tests</div>
+                    <div class="metric-value">
+                      <strong>34</strong>
+                      <span class="metric-delta">new cases</span>
+                    </div>
+                    <p class="slds-text-body_small slds-m-top_xx-small">
+                      Each test stores full conversation history, “gold” answer,
+                      risk tags, and links back to the original transcript.
                     </p>
                   </div>
+
                   <div class="metric-card">
-                    <div class="metric-label">Abandoned flows</div>
+                    <div class="metric-label">Suggested new suites</div>
                     <p class="slds-text-body_small">
-                      37 conversations where patients gave up mid-triage; 11 promoted to
-                      tests.
+                      Billing coverage drift · Telehealth readiness · Campus routing
+                      &amp; parking · Care navigation after discharge.
                     </p>
                   </div>
 
                   <button class="btn-primary slds-m-top_small">
-                    Harvest New Test Cases
+                    Harvest New Test Cases from Logs
                   </button>
                 </div>
               </div>
 
+              <!-- Right: Drift radar / hotspot watch -->
               <div>
                 <div class="card">
-                  <div class="section-title">Drift radar</div>
+                  <div class="section-title">Intent Drift &amp; Hotspot Watch</div>
+                  <p class="slds-text-body_small slds-m-bottom_small">
+                    Track how answers move away from your “gold” behavior as models,
+                    prompts, and content evolve.
+                  </p>
+
                   <div class="metric-card slds-m-bottom_small">
                     <div class="metric-label">Intents stable</div>
                     <div class="metric-value">
                       <strong>24</strong><span class="metric-delta">/31</span>
                     </div>
                     <p class="slds-text-body_small slds-m-top_xx-small">
-                      Answers match last month within tolerance.
+                      Responses within similarity and safety tolerance compared to last month.
                     </p>
                   </div>
+
                   <div class="metric-card slds-m-bottom_small">
                     <div class="metric-label">Intents with drift</div>
                     <div class="metric-value">
-                      <strong>7</strong
-                      ><span class="metric-delta bad">need review</span>
+                      <strong>7</strong>
+                      <span class="metric-delta bad">need review</span>
                     </div>
                     <p class="slds-text-body_small slds-m-top_xx-small">
-                      Parking, telehealth, imaging prep – tone and call-to-action have
-                      shifted.
+                      Parking near Comer, imaging prep, telehealth video visits, and
+                      billing coverage Q&amp;A.
                     </p>
                   </div>
+
                   <div class="metric-card">
-                    <div class="metric-label">Transcripts processed</div>
+                    <div class="metric-label">Hotspot alerts created</div>
                     <div class="metric-value">
-                      <strong>12.4k</strong
-                      ><span class="metric-delta">in 7 days</span>
+                      <strong>12</strong>
+                      <span class="metric-delta">to review</span>
                     </div>
+                    <p class="slds-text-body_small slds-m-top_xx-small">
+                      Automatically schedules focused regression suites and opens
+                      Salesforce review tasks for risky changes.
+                    </p>
                   </div>
 
                   <button class="btn-ghost btn-full slds-m-top_small">
-                    View Drift Comparisons
+                    View Drift Comparisons &amp; Alerts
                   </button>
                 </div>
               </div>
