@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Agentforce Test Lab</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Optional SLDS for icon/font parity (not required for layout) -->
+  <link
+    rel="stylesheet"
+    href="https://www.lightningdesignsystem.com/assets/styles/salesforce-lightning-design-system.min.css"
+  />
+
+  <style>
+    /* ---------- Base layout ---------- */
+
+    body {
+      margin: 0;
+      background: #f4f6fb;
+      font-family: "Salesforce Sans", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      color: #111827;
+    }
+
+    .app-shell {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .app-container {
+      max-width: 1040px;
+      width: 100%;
+    }
+
+    .app-card {
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      border: 1px solid #e5e7eb;
+      overflow: hidden;
+    }
+
+    /* ---------- Header ---------- */
+
+    .app-header {
+      padding: 1.1rem 1.4rem 1rem;
+      border-bottom: 1px solid #e5e7eb;
+      background: radial-gradient(
+        circle at top left,
+        #eef2ff,
+        #f9fafb 45%,
+        #ffffff 100%
+      );
+    }
+
+    .env-pill,
+    .quality-pill {
+      border-radius: 999px;
+      padding: 0.18rem 0.7rem;
+      font-size: 0.7rem;
+      border: 1px solid #d1d5db;
+      background: #ffffff;
+      margin-left: 0.4rem;
+      white-space: nowrap;
+    }
+
+    .quality-pill {
+      border-color: #4f46e5;
+      color: #4338ca;
+      background: #eef2ff;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.2rem;
+      border-radius: 999px;
+      padding: 0.2rem 0.7rem;
+      font-size: 0.7rem;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
+      margin-left: 0.35rem;
+      white-space: nowrap;
+    }
+
+    .chip strong {
+      font-weight: 600;
+    }
+
+    /* ---------- Tabs ---------- */
+
+    .tab-bar {
+      display: flex;
+      align-items: center;
+      padding: 0.4rem 0.6rem;
+      border-bottom: 1px solid #e5e7eb;
+      background: #ffffff;
+    }
+
+    .tab-list {
+      display: flex;
+      gap: 0.3rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .tab-item {
+      list-style: none;
+    }
+
+    .tab-link {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 0.8rem;
+      color: #4b5563;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .tab-link:hover {
+      background: #f3f4ff;
+    }
+
+    .tab-item.active .tab-link {
+      background: #eef2ff;
+      color: #111827;
+      border-color: #c7d2fe;
+      font-weight: 600;
+    }
+
+    .tab-caption {
+      margin-left: auto;
+      font-size: 0.7rem;
+      color: #9ca3af;
+      padding-right: 0.6rem;
+    }
+
+    /* ---------- Content shells ---------- */
+
+    .tab-content {
+      padding: 1rem 1.4rem 1.4rem;
+      background: #f9fafb;
+    }
+
+    .tab-panel {
+      /* toggled via JS by setting hidden true/false */
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      padding: 1rem;
+    }
+
+    .card + .card {
+      margin-top: 0.8rem;
+    }
+
+    .section-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6b7280;
+      margin-bottom: 0.35rem;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 2fr 1.3fr;
+      gap: 0.75rem;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .metric-card {
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      padding: 0.75rem 0.85rem;
+      background: #ffffff;
+      font-size: 0.8rem;
+    }
+
+    .metric-label {
+      font-size: 0.72rem;
+      color: #6b7280;
+      margin-bottom: 0.15rem;
+    }
+
+    .metric-value {
+      display: flex;
+      align-items: baseline;
+      gap: 0.25rem;
+    }
+
+    .metric-value strong {
+      font-size: 1rem;
+    }
+
+    .metric-delta {
+      font-size: 0.7rem;
+      color: #10b981;
+    }
+
+    .metric-delta.warn {
+      color: #f97316;
+    }
+
+    .metric-delta.bad {
+      color: #dc2626;
+    }
+
+    .pill-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.16rem 0.7rem;
+      border-radius: 999px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      font-size: 0.72rem;
+      margin-right: 0.25rem;
+      margin-bottom: 0.25rem;
+      color: #374151;
+    }
+
+    .pill-dot {
+      width: 0.42rem;
+      height: 0.42rem;
+      border-radius: 999px;
+      background: #10b981;
+      margin-right: 0.25rem;
+    }
+
+    .btn-primary {
+      border-radius: 999px;
+      background: linear-gradient(135deg, #4f46e5, #6366f1);
+      border: none;
+      color: #ffffff;
+      padding: 0.45rem 1.1rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    .btn-ghost {
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1px solid #d1d5db;
+      color: #374151;
+      padding: 0.45rem 0.95rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    .btn-full {
+      width: 100%;
+      text-align: center;
+    }
+
+    .quick-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .quick-chip {
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
+      padding: 0.3rem 0.75rem;
+      font-size: 0.78rem;
+      cursor: pointer;
+    }
+
+    .quick-chip span {
+      font-weight: 600;
+      margin-right: 0.2rem;
+    }
+
+    /* ---------- KPI strip (Regression & Failure Analytics) ---------- */
+
+    .kpi-section-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-top: 0.4rem;
+      margin-bottom: 0.6rem;
+      color: #111827;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .kpi-card {
+      border-radius: 14px;
+      padding: 0.8rem 1rem;
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .kpi-card__value {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.1rem;
+    }
+
+    .kpi-card__label {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .kpi-card--neutral {
+      border-top: 4px solid #9ca3af;
+    }
+
+    .kpi-card--success {
+      border-top: 4px solid #16a34a;
+      background: #ecfdf5;
+    }
+
+    .kpi-card--error {
+      border-top: 4px solid #dc2626;
+      background: #fef2f2;
+    }
+
+    .kpi-card--warn {
+      border-top: 4px solid #d97706;
+      background: #fffbeb;
+    }
+
+    .kpi-proposals-wrap {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
+      gap: 0.75rem;
+      margin-top: 0.9rem;
+    }
+
+    .kpi-proposals-card {
+      border-radius: 14px;
+      padding: 0.9rem 1rem;
+      background: #eef2ff;
+      border: 1px solid #c7d2fe;
+    }
+
+    .kpi-proposals-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #1d4ed8;
+      margin-bottom: 0.4rem;
+    }
+
+    .kpi-subtext {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .kpi-chart-placeholder {
+      border-radius: 10px;
+      border: 1px dashed #d1d5db;
+      padding: 0.75rem;
+      font-size: 0.78rem;
+      color: #9ca3af;
+      text-align: center;
+      background: #f9fafb;
+    }
+
+    /* ---------- Responsive ---------- */
+
+    @media (max-width: 900px) {
+      .metric-grid,
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+
+      .tab-caption {
+        display: none;
+      }
+
+      .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .kpi-proposals-wrap {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body class="slds-scope">
+  <div class="app-shell">
+    <div class="app-container">
+      <div class="app-card">
+        <!-- ---------- HEADER ---------- -->
+        <header class="app-header">
+          <div class="slds-grid slds-grid_vertical-align-center slds-wrap">
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3">
+              <div class="slds-media">
+                <div class="slds-media__figure">
+                  <span class="slds-icon_container slds-icon-standard-bot" title="Bot">
+                    <svg class="slds-icon slds-icon_large" aria-hidden="true">
+                      <use
+                        xlink:href="https://www.lightningdesignsystem.com/assets/icons/standard-sprite/svg/symbols.svg#bot">
+                      </use>
+                    </svg>
+                  </span>
+                </div>
+                <div class="slds-media__body">
+                  <p class="slds-text-title_caps slds-m-bottom_xx-small">
+                    UChicago Medicine
+                  </p>
+                  <div class="slds-grid slds-grid_vertical-align-center slds-wrap">
+                    <h1 class="slds-text-heading_medium slds-truncate">
+                      Agentforce Test Lab
+                    </h1>
+                    <span class="env-pill">Sandbox · UAT</span>
+                    <span class="quality-pill">Agent Quality 92.4</span>
+                  </div>
+                  <p class="slds-text-body_small slds-m-top_xx-small">
+                    A cockpit for chat &amp; voice bots: test suites, performance SLOs,
+                    and insights learned from real patient conversations.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-text-align_right slds-m-top_small">
+              <span class="chip">Suites <strong>12</strong></span>
+              <span class="chip">Tests <strong>236</strong></span>
+              <span class="chip">Intents <strong>31</strong></span>
+            </div>
+          </div>
+        </header>
+
+        <!-- ---------- TAB BAR ---------- -->
+        <div class="tab-bar">
+          <ul class="tab-list" role="tablist">
+            <li class="tab-item active" role="presentation">
+              <a href="#tab-overview" class="tab-link" role="tab" aria-selected="true">Overview</a>
+            </li>
+            <li class="tab-item" role="presentation">
+              <a href="#tab-authoring" class="tab-link" role="tab">Authoring</a>
+            </li>
+            <li class="tab-item" role="presentation">
+              <a href="#tab-voice" class="tab-link" role="tab">Voice</a>
+            </li>
+            <li class="tab-item" role="presentation">
+              <a href="#tab-learning" class="tab-link" role="tab">Learning</a>
+            </li>
+            <li class="tab-item" role="presentation">
+              <a href="#tab-gov" class="tab-link" role="tab">Governance</a>
+            </li>
+          </ul>
+          <span class="tab-caption">Snowflake · Data Cloud · Agentforce APIs</span>
+        </div>
+
+        <!-- ---------- TAB CONTENT ---------- -->
+        <main class="tab-content">
+          <!-- ===== OVERVIEW TAB ===== -->
+          <section id="tab-overview" class="tab-panel">
+            <!-- Quick actions -->
+            <div class="card" style="margin-bottom: 0.9rem;">
+              <div class="section-title">Quick actions</div>
+              <div class="quick-actions">
+                <div class="quick-chip">
+                  <span>Smoke</span> Run core regression on all bots
+                </div>
+                <div class="quick-chip">
+                  <span>Perf</span> Performance sweep (p95 latency)
+                </div>
+                <div class="quick-chip">
+                  <span>Safety</span> PHI / hallucination guardrail run
+                </div>
+                <div class="quick-chip">
+                  <span>Drift</span> Compare answers vs last release
+                </div>
+              </div>
+            </div>
+
+            <div class="two-col">
+              <div>
+                <div class="card">
+                  <div class="section-title">Release snapshot · Cardiology</div>
+                  <div class="metric-grid slds-m-bottom_small">
+                    <div class="metric-card">
+                      <div class="metric-label">Virtual Urgent Care Bot</div>
+                      <div class="metric-value">
+                        <strong>97%</strong><span class="metric-delta">pass</span>
+                      </div>
+                      <p class="slds-text-body_small slds-m-top_xx-small">
+                        All PHI checks green; one low-severity triage warning open.
+                      </p>
+                    </div>
+                    <div class="metric-card">
+                      <div class="metric-label">Provider Search · Cardiology</div>
+                      <div class="metric-value">
+                        <strong>94%</strong><span class="metric-delta">pass</span>
+                      </div>
+                      <p class="slds-text-body_small slds-m-top_xx-small">
+                        Comer vs Hyde Park routing stable for pediatrics &amp; adults.
+                      </p>
+                    </div>
+                    <div class="metric-card">
+                      <div class="metric-label">MyChart Triage Assistant</div>
+                      <div class="metric-value">
+                        <strong>90%</strong><span class="metric-delta warn">improving</span>
+                      </div>
+                      <p class="slds-text-body_small slds-m-top_xx-small">
+                        Escalation timing better; two high-risk scenarios under review.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="metric-grid slds-m-bottom_small">
+                    <div class="metric-card">
+                      <div class="metric-label">Intent coverage</div>
+                      <div class="metric-value">
+                        <strong>82%</strong><span class="metric-delta">of active intents</span>
+                      </div>
+                      <p class="slds-text-body_small slds-m-top_xx-small">
+                        31 mapped intents · 6 with low or no regression coverage.
+                      </p>
+                    </div>
+                    <div class="metric-card">
+                      <div class="metric-label">Drift score (30 days)</div>
+                      <div class="metric-value">
+                        <strong>0.18</strong><span class="metric-delta">low drift</span>
+                      </div>
+                      <p class="slds-text-body_small slds-m-top_xx-small">
+                        3 intents showing answer shifts: imaging, telehealth, parking.
+                      </p>
+                    </div>
+                    <div class="metric-card">
+                      <div class="metric-label">Agent Quality</div>
+                      <div class="metric-value">
+                        <strong>92.4</strong><span class="metric-delta">/100</span>
+                      </div>
+                      <p class="slds-text-body_small slds-m-top_xx-small">
+                        Weights: safety 40, factuality 40, UX 20.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="slds-m-bottom_small">
+                    <span class="pill-tag"><span class="pill-dot"></span> Virtual urgent care</span>
+                    <span class="pill-tag">Provider search</span>
+                    <span class="pill-tag">MyChart &amp; telehealth</span>
+                    <span class="pill-tag">Internal copilot</span>
+                  </div>
+
+                  <button class="btn-primary">
+                    Run Release Check (All Bots)
+                  </button>
+                  <button class="btn-ghost slds-m-left_small">
+                    Open Drift Radar
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <div class="card">
+                  <div class="section-title">Performance &amp; SLOs</div>
+                  <div class="metric-card slds-m-bottom_small">
+                    <div class="metric-label">p95 latency (chat)</div>
+                    <div class="metric-value">
+                      <strong>1.3s</strong
+                      ><span class="metric-delta">-0.4s vs last release</span>
+                    </div>
+                  </div>
+                  <div class="metric-card slds-m-bottom_small">
+                    <div class="metric-label">p95 latency (voice)</div>
+                    <div class="metric-value">
+                      <strong>1.9s</strong
+                      ><span class="metric-delta">within 2.5s SLO</span>
+                    </div>
+                  </div>
+                  <div class="metric-card">
+                    <div class="metric-label">Error rate (24h)</div>
+                    <div class="metric-value">
+                      <strong>0.4%</strong><span class="metric-delta">all channels</span>
+                    </div>
+                    <p class="slds-text-body_small slds-m-top_xx-small">
+                      Two short spikes were re-tested with synthetic traffic.
+                    </p>
+                  </div>
+
+                  <button class="btn-ghost btn-full slds-m-top_small">
+                    View SLO Timeline
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Regression & Failure Analytics -->
+            <div class="card" style="margin-top: 1rem;">
+              <h2 class="kpi-section-title">
+                3. Regression &amp; Failure Analytics
+              </h2>
+
+              <div class="kpi-grid slds-m-bottom_small">
+                <div class="kpi-card kpi-card--neutral">
+                  <div class="kpi-card__value">0</div>
+                  <div class="kpi-card__label">Tests Executed</div>
+                </div>
+                <div class="kpi-card kpi-card--success">
+                  <div class="kpi-card__value">0</div>
+                  <div class="kpi-card__label">Passes</div>
+                </div>
+                <div class="kpi-card kpi-card--error">
+                  <div class="kpi-card__value">0</div>
+                  <div class="kpi-card__label">Failures</div>
+                </div>
+                <div class="kpi-card kpi-card--warn">
+                  <div class="kpi-card__value">0%</div>
+                  <div class="kpi-card__label">Failure Rate</div>
+                </div>
+              </div>
+
+              <div class="kpi-proposals-wrap">
+                <div class="kpi-proposals-card">
+                  <div class="kpi-proposals-title">
+                    Data-Driven Proposals (From Live Transcript Analysis)
+                  </div>
+                  <button class="btn-primary slds-m-bottom_x-small">
+                    Analyze Logs for New Regression Candidates
+                  </button>
+                  <p class="kpi-subtext">
+                    Scan Snowflake / Data Cloud transcripts to find failing patterns,
+                    abandoned flows, and new intents. Promote the best examples directly
+                    into new regression tests.
+                  </p>
+                </div>
+
+                <div>
+                  <div class="metric-card slds-m-bottom_small">
+                    <div class="metric-label">Top Failure Intents (Mock)</div>
+                    <div class="kpi-chart-placeholder">
+                      Placeholder for D3 / chart – e.g., bar chart of failure counts by
+                      intent (provider search, imaging, parking, telehealth...).
+                    </div>
+                  </div>
+                  <p class="kpi-subtext">
+                    Charts and numbers will populate as soon as suites run and logs are
+                    ingested.
+                  </p>
+                </div>
+              </div>
+
+              <p class="kpi-subtext slds-m-top_small">
+                Showing mock failure trends (real executions will update these tiles).
+              </p>
+            </div>
+          </section>
+
+          <!-- ===== AUTHORING TAB ===== -->
+          <section id="tab-authoring" class="tab-panel" hidden>
+            <div class="two-col">
+              <div>
+                <div class="card">
+                  <div class="section-title">AI Test Writer</div>
+                  <p class="slds-text-body_small slds-m-bottom_small">
+                    Describe a flow in plain language. The app generates multi-turn chat
+                    and voice tests, mapped to intents, personas, and guardrails, then
+                    writes them into Salesforce test objects.
+                  </p>
+
+                  <div class="metric-card slds-m-bottom_small">
+                    <div class="metric-label">Prompt example</div>
+                    <p class="slds-text-body_small">
+                      “Create 10 tests for pediatrics cardiology at Comer – mix of chat
+                      and voice – ensuring PHI safety, correct routing, and clear
+                      follow-up instructions.”
+                    </p>
+                  </div>
+
+                  <div class="metric-card">
+                    <div class="metric-label">What you get</div>
+                    <p class="slds-text-body_small">
+                      • Conversation history JSON<br />
+                      • Expected behavior &amp; assertions<br />
+                      • Categories: PHI, routing, tone, hallucination<br />
+                      • Linked to intent, bot, and environment
+                    </p>
+                  </div>
+
+                  <button class="btn-primary slds-m-top_small">
+                    Draft Suite with AI
+                  </button>
+                  <button class="btn-ghost slds-m-left_small slds-m-top_small">
+                    Review Draft Tests
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <div class="card">
+                  <div class="section-title">Intent coverage map</div>
+                  <div class="metric-card slds-m-bottom_small">
+                    <div class="metric-label">High coverage</div>
+                    <p class="slds-text-body_small">
+                      Provider search · Virtual urgent care · Appointment changes.
+                    </p>
+                  </div>
+                  <div class="metric-card slds-m-bottom_small">
+                    <div class="metric-label">Medium coverage</div>
+                    <p class="slds-text-body_small">
+                      Billing questions · Imaging prep · Parking &amp; directions.
+                    </p>
+                  </div>
+                  <div class="metric-card">
+                    <div class="metric-label">Gaps (auto-detected)</div>
+                    <p class="slds-text-body_small">
+                      Medication refills · Financial assistance follow-up.
+                    </p>
+                  </div>
+
+                  <button class="btn-ghost btn-full slds-m-top_small">
+                    Open Intent Coverage View
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ===== VOICE TAB ===== -->
+          <section id="tab-voice" class="tab-panel" hidden>
+            <div class="two-col">
+              <div>
+                <div class="card">
+                  <div class="section-title">Voice personas</div>
+                  <div class="metric-grid">
+                    <div class="metric-card">
+                      <div class="metric-label">Busy commuter</div>
+                      <p class="slds-text-body_small">
+                        Noisy background, barge-in, short sentences. Stresses STT and
+                        turn-taking.
+                      </p>
+                    </div>
+                    <div class="metric-card">
+                      <div class="metric-label">Elderly caller</div>
+                      <p class="slds-text-body_small">
+                        Slower pace, asks for repetition. Evaluates empathy and clarity.
+                      </p>
+                    </div>
+                    <div class="metric-card">
+                      <div class="metric-label">Accented English</div>
+                      <p class="slds-text-body_small">
+                        Mispronounces “cardiologist” and “gastroenterology”; surfaces
+                        mis-recognition hotspots.
+                      </p>
+                    </div>
+                  </div>
+
+                  <button class="btn-primary slds-m-top_small">
+                    Run Voice Regression
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <div class="card">
+                  <div class="section-title">Voice UX &amp; STT insights</div>
+                  <div class="metric-card slds-m-bottom_small">
+                    <div class="metric-label">Voice UX score</div>
+                    <div class="metric-value">
+                      <strong>84</strong
+                      ><span class="metric-delta warn">/100</span>
+                    </div>
+                    <p class="slds-text-body_small slds-m-top_xx-small">
+                      Latency and barge-in are strong; empathy lags in high-anxiety
+                      scenarios.
+                    </p>
+                  </div>
+                  <div class="metric-card slds-m-bottom_small">
+                    <div class="metric-label">Top mis-recognized phrases</div>
+                    <p class="slds-text-body_small">
+                      “gastroenterology”, “telehealth visit”, “MyChart”. Suggested
+                      vocabulary hints and prompt tweaks ready.
+                    </p>
+                  </div>
+                  <div class="metric-card">
+                    <div class="metric-label">Call rhythm</div>
+                    <p class="slds-text-body_small">
+                      Time-to-first-word: 1.7s · long silences down 23% since last
+                      release.
+                    </p>
+                  </div>
+
+                  <button class="btn-ghost btn-full slds-m-top_small">
+                    Open Call Timeline View
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ===== LEARNING TAB ===== -->
+          <section id="tab-learning" class="tab-panel" hidden>
+            <div class="two-col">
+              <div>
+                <div class="card">
+                  <div class="section-title">Log clusters (last 7 days)</div>
+                  <div class="metric-card slds-m-bottom_small">
+                    <div class="metric-label">“Which campus is that?”</div>
+                    <p class="slds-text-body_small">
+                      8% of chats involve location confusion. 6 new routing tests were
+                      created from these transcripts.
+                    </p>
+                  </div>
+                  <div class="metric-card slds-m-bottom_small">
+                    <div class="metric-label">Coverage &amp; benefits</div>
+                    <p class="slds-text-body_small">
+                      Imaging &amp; procedure coverage questions spiked after last
+                      campaign. Billing/coverage suite suggested.
+                    </p>
+                  </div>
+                  <div class="metric-card">
+                    <div class="metric-label">Abandoned flows</div>
+                    <p class="slds-text-body_small">
+                      37 conversations where patients gave up mid-triage; 11 promoted to
+                      tests.
+                    </p>
+                  </div>
+
+                  <button class="btn-primary slds-m-top_small">
+                    Harvest New Test Cases
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <div class="card">
+                  <div class="section-title">Drift radar</div>
+                  <div class="metric-card slds-m-bottom_small">
+                    <div class="metric-label">Intents stable</div>
+                    <div class="metric-value">
+                      <strong>24</strong><span class="metric-delta">/31</span>
+                    </div>
+                    <p class="slds-text-body_small slds-m-top_xx-small">
+                      Answers match last month within tolerance.
+                    </p>
+                  </div>
+                  <div class="metric-card slds-m-bottom_small">
+                    <div class="metric-label">Intents with drift</div>
+                    <div class="metric-value">
+                      <strong>7</strong
+                      ><span class="metric-delta bad">need review</span>
+                    </div>
+                    <p class="slds-text-body_small slds-m-top_xx-small">
+                      Parking, telehealth, imaging prep – tone and call-to-action have
+                      shifted.
+                    </p>
+                  </div>
+                  <div class="metric-card">
+                    <div class="metric-label">Transcripts processed</div>
+                    <div class="metric-value">
+                      <strong>12.4k</strong
+                      ><span class="metric-delta">in 7 days</span>
+                    </div>
+                  </div>
+
+                  <button class="btn-ghost btn-full slds-m-top_small">
+                    View Drift Comparisons
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ===== GOVERNANCE TAB ===== -->
+          <section id="tab-gov" class="tab-panel" hidden>
+            <div class="two-col">
+              <div>
+                <div class="card">
+                  <div class="section-title">Guardrail packs</div>
+                  <div class="metric-card slds-m-bottom_small">
+                    <div class="metric-label">Healthcare core</div>
+                    <p class="slds-text-body_small">
+                      Provider search, appointment flows, consent and PHI handling. Applied
+                      to all cardiology bots.
+                    </p>
+                  </div>
+                  <div class="metric-card slds-m-bottom_small">
+                    <div class="metric-label">No clinical advice</div>
+                    <p class="slds-text-body_small">
+                      Enforces guidance vs diagnosis language and logs violations across
+                      chat &amp; voice.
+                    </p>
+                  </div>
+                  <div class="metric-card">
+                    <div class="metric-label">Pediatric safety</div>
+                    <p class="slds-text-body_small">
+                      Guards triage decisions for under-18; wired to urgent care &amp; ED
+                      escalation flows.
+                    </p>
+                  </div>
+
+                  <button class="btn-ghost btn-full slds-m-top_small">
+                    Manage Guardrail Packs
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <div class="card">
+                  <div class="section-title">Review queue &amp; audit trail</div>
+                  <div class="metric-card slds-m-bottom_small">
+                    <div class="metric-label">Open review items</div>
+                    <div class="metric-value">
+                      <strong>14</strong
+                      ><span class="metric-delta warn">needs triage</span>
+                    </div>
+                    <p class="slds-text-body_small slds-m-top_xx-small">
+                      Mix of hallucination flags, tone issues, and late escalations.
+                    </p>
+                  </div>
+                  <div class="metric-card slds-m-bottom_small">
+                    <div class="metric-label">Most common root cause</div>
+                    <p class="slds-text-body_small">
+                      Out-of-date imaging scheduling content; prompt/knowledge updates
+                      recommended.
+                    </p>
+                  </div>
+                  <div class="metric-card">
+                    <div class="metric-label">Audit evidence</div>
+                    <p class="slds-text-body_small">
+                      Each failing test stores transcript, evaluation JSON, configuration
+                      version, and reviewer decision – ready for compliance reviews.
+                    </p>
+                  </div>
+
+                  <button class="btn-primary slds-m-top_small">
+                    Open Review Queue
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---------- Simple tab switching ---------- -->
+  <script>
+    (function () {
+      const items = document.querySelectorAll(".tab-item");
+      const links = document.querySelectorAll(".tab-link");
+      const panels = document.querySelectorAll(".tab-panel");
+
+      function showTab(id) {
+        items.forEach((i) => i.classList.remove("active"));
+        links.forEach((a) => {
+          if (a.getAttribute("href") === "#" + id) {
+            a.parentElement.classList.add("active");
+            a.setAttribute("aria-selected", "true");
+          } else {
+            a.setAttribute("aria-selected", "false");
+          }
+        });
+        panels.forEach((p) => {
+          p.hidden = p.id !== id;
+        });
+      }
+
+      links.forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          showTab(link.getAttribute("href").substring(1));
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
