@@ -5,7 +5,7 @@
   <title>Agentforce Test Lab</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Optional SLDS for icon/font parity (not required for layout) -->
+  <!-- Optional SLDS for icons / typography -->
   <link
     rel="stylesheet"
     href="https://www.lightningdesignsystem.com/assets/styles/salesforce-lightning-design-system.min.css"
@@ -171,7 +171,7 @@
 
     .two-col {
       display: grid;
-      grid-template-columns: 2fr 1.3fr;
+      grid-template-columns: 2fr 1.35fr;
       gap: 0.75rem;
     }
 
@@ -285,7 +285,7 @@
       margin-right: 0.2rem;
     }
 
-    /* ---------- KPI strip (Regression & Failure Analytics) ---------- */
+    /* ---------- KPI strip ---------- */
 
     .kpi-section-title {
       font-size: 0.95rem;
@@ -378,7 +378,7 @@
       background: #f9fafb;
     }
 
-    /* ---------- Running Tests & Monitor styles ---------- */
+    /* ---------- Running & table ---------- */
 
     .run-list {
       display: flex;
@@ -450,7 +450,7 @@
       height: 100%;
       border-radius: inherit;
       background: linear-gradient(90deg, #4f46e5, #22c55e);
-      width: 45%; /* sample value, override inline */
+      width: 45%; /* override inline */
     }
 
     .run-meta {
@@ -468,8 +468,6 @@
     .run-meta span:first-child::before {
       content: "";
     }
-
-    /* table */
 
     .run-table-card {
       border-radius: 12px;
@@ -510,6 +508,238 @@
       white-space: normal;
     }
 
+    /* ---------- Monitor analytics full-width ---------- */
+
+    .analytics-panel {
+      border-radius: 14px;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
+      padding: 0.9rem 1rem 1rem;
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .analytics-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .analytics-header {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #9ca3af;
+    }
+
+    .analytics-header-pill {
+      font-size: 0.7rem;
+      color: #6b7280;
+    }
+
+    .analytics-kpi-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .analytics-kpi-card {
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      padding: 0.6rem 0.7rem;
+      background: #f9fafb;
+    }
+
+    .analytics-kpi-label {
+      font-size: 0.7rem;
+      color: #6b7280;
+      margin-bottom: 0.18rem;
+    }
+
+    .analytics-kpi-value {
+      display: flex;
+      align-items: baseline;
+      gap: 0.15rem;
+    }
+
+    .analytics-kpi-value strong {
+      font-size: 1.1rem;
+    }
+
+    .analytics-kpi-delta {
+      font-size: 0.7rem;
+      color: #10b981;
+    }
+
+    .analytics-kpi-delta.warn {
+      color: #f97316;
+    }
+
+    .analytics-kpi-delta.bad {
+      color: #dc2626;
+    }
+
+    .analytics-charts-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 0.75rem;
+    }
+
+    .analytics-card-sub {
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      padding: 0.65rem 0.75rem;
+      background: #ffffff;
+    }
+
+    .analytics-subtitle-label {
+      font-size: 0.7rem;
+      color: #6b7280;
+      margin-bottom: 0.35rem;
+    }
+
+    .spark-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 52px;
+      margin-bottom: 0.3rem;
+    }
+
+    .spark-bar {
+      flex: 1;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #4f46e5, #a5b4fc);
+      opacity: 0.9;
+    }
+
+    .spark-bar.soft {
+      background: linear-gradient(180deg, #e5e7eb, #d1d5db);
+      opacity: 1;
+    }
+
+    .spark-caption {
+      font-size: 0.7rem;
+      color: #9ca3af;
+    }
+
+    .analytics-bottom-row {
+      border-top: 1px solid #f3f4f6;
+      padding-top: 0.7rem;
+      margin-top: 0.4rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 0.75rem;
+    }
+
+    .risk-list {
+      list-style: none;
+      padding: 0;
+      margin: 0.15rem 0 0;
+      font-size: 0.75rem;
+    }
+
+    .risk-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.3rem;
+      margin-bottom: 0.28rem;
+      color: #6b7280;
+    }
+
+    .risk-dot {
+      margin-top: 0.28rem;
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #f97316;
+    }
+
+    .risk-dot.bad {
+      background: #dc2626;
+    }
+
+    .risk-tag {
+      font-size: 0.66rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #f97316;
+      margin-right: 0.25rem;
+      white-space: nowrap;
+    }
+
+    .risk-tag.bad {
+      color: #dc2626;
+    }
+
+    .channel-stack-label {
+      font-size: 0.7rem;
+      color: #6b7280;
+      margin-bottom: 0.25rem;
+    }
+
+    .channel-stack-bar {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+      display: flex;
+    }
+
+    .channel-stack-chat {
+      width: 62%;
+      background: linear-gradient(90deg, #22c55e, #4ade80);
+    }
+
+    .channel-stack-voice {
+      width: 38%;
+      background: linear-gradient(90deg, #3b82f6, #6366f1);
+    }
+
+    .channel-stack-legend {
+      display: flex;
+      gap: 0.45rem;
+      margin-top: 0.25rem;
+      font-size: 0.7rem;
+      color: #6b7280;
+      flex-wrap: wrap;
+    }
+
+    .legend-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      display: inline-block;
+      margin-right: 0.18rem;
+    }
+
+    .legend-dot.chat {
+      background: #22c55e;
+    }
+
+    .legend-dot.voice {
+      background: #3b82f6;
+    }
+
+    .intent-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin-top: 0.3rem;
+    }
+
+    .intent-chip {
+      border-radius: 999px;
+      background: #f3f4ff;
+      border: 1px solid #e0e7ff;
+      font-size: 0.7rem;
+      padding: 0.15rem 0.6rem;
+      color: #4338ca;
+    }
+
     /* ---------- Responsive ---------- */
 
     @media (max-width: 900px) {
@@ -534,7 +764,13 @@
       .run-table td:nth-child(4),
       .run-table th:nth-child(5),
       .run-table td:nth-child(5) {
-        display: none; /* hide some cols on narrow screens */
+        display: none;
+      }
+
+      .analytics-kpi-row,
+      .analytics-charts-row,
+      .analytics-bottom-row {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -618,7 +854,6 @@
         <main class="tab-content">
           <!-- ===== OVERVIEW TAB ===== -->
           <section id="tab-overview" class="tab-panel">
-            <!-- Quick actions -->
             <div class="card" style="margin-bottom: 0.9rem;">
               <div class="section-title">Quick actions</div>
               <div class="quick-actions">
@@ -751,7 +986,6 @@
               </div>
             </div>
 
-            <!-- Regression & Failure Analytics -->
             <div class="card" style="margin-top: 1rem;">
               <h2 class="kpi-section-title">
                 3. Regression &amp; Failure Analytics
@@ -973,95 +1207,183 @@
             </div>
           </section>
 
-          <!-- ===== MONITOR TAB ===== -->
+          <!-- ===== MONITOR TAB (TABLE + FULL-WIDTH ANALYTICS) ===== -->
           <section id="tab-monitor" class="tab-panel" hidden>
-            <div class="two-col">
-              <div>
-                <div class="run-table-card">
-                  <table class="run-table">
-                    <thead>
-                      <tr>
-                        <th>Run</th>
-                        <th>Bot / Intent</th>
-                        <th>Suite</th>
-                        <th>Env</th>
-                        <th>Started</th>
-                        <th>Pass</th>
-                        <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td class="run-cell-main">ReleaseCheck-2025-11-18-02</td>
-                        <td>Cardiology Provider Search</td>
-                        <td>Full Regression</td>
-                        <td>UAT</td>
-                        <td>08:12</td>
-                        <td>94%</td>
-                        <td><span class="status-pill success">Success</span></td>
-                      </tr>
-                      <tr>
-                        <td class="run-cell-main">Voice-Smoke-AfterHours</td>
-                        <td>Urgent Care Voice</td>
-                        <td>Smoke</td>
-                        <td>UAT</td>
-                        <td>09:45</td>
-                        <td>88%</td>
-                        <td><span class="status-pill failed">Issues</span></td>
-                      </tr>
-                      <tr>
-                        <td class="run-cell-main">Billing-Campaign-Drift</td>
-                        <td>Billing Chat</td>
-                        <td>Drift Compare</td>
-                        <td>UAT</td>
-                        <td>Yesterday</td>
-                        <td>91%</td>
-                        <td><span class="status-pill success">Success</span></td>
-                      </tr>
-                      <tr>
-                        <td class="run-cell-main">PHI-Guardrail-Weekly</td>
-                        <td>All bots</td>
-                        <td>Guardrail Pack</td>
-                        <td>Prod</td>
-                        <td>Sun 02:10</td>
-                        <td>100%</td>
-                        <td><span class="status-pill success">Success</span></td>
-                      </tr>
-                    </tbody>
-                  </table>
+            <div class="run-table-card">
+              <table class="run-table">
+                <thead>
+                  <tr>
+                    <th>Run</th>
+                    <th>Bot / Intent</th>
+                    <th>Suite</th>
+                    <th>Env</th>
+                    <th>Started</th>
+                    <th>Pass</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="run-cell-main">ReleaseCheck-2025-11-18-02</td>
+                    <td>Cardiology Provider Search</td>
+                    <td>Full Regression</td>
+                    <td>UAT</td>
+                    <td>08:12</td>
+                    <td>94%</td>
+                    <td><span class="status-pill success">Success</span></td>
+                  </tr>
+                  <tr>
+                    <td class="run-cell-main">Voice-Smoke-AfterHours</td>
+                    <td>Urgent Care Voice</td>
+                    <td>Smoke</td>
+                    <td>UAT</td>
+                    <td>09:45</td>
+                    <td>88%</td>
+                    <td><span class="status-pill failed">Issues</span></td>
+                  </tr>
+                  <tr>
+                    <td class="run-cell-main">Billing-Campaign-Drift</td>
+                    <td>Billing Chat</td>
+                    <td>Drift Compare</td>
+                    <td>UAT</td>
+                    <td>Yesterday</td>
+                    <td>91%</td>
+                    <td><span class="status-pill success">Success</span></td>
+                  </tr>
+                  <tr>
+                    <td class="run-cell-main">PHI-Guardrail-Weekly</td>
+                    <td>All bots</td>
+                    <td>Guardrail Pack</td>
+                    <td>Prod</td>
+                    <td>Sun 02:10</td>
+                    <td>100%</td>
+                    <td><span class="status-pill success">Success</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="analytics-panel">
+              <div class="analytics-header-row">
+                <div class="analytics-header">Run analytics</div>
+                <div class="analytics-header-pill">
+                  View for last 7 days · mock data
                 </div>
               </div>
 
-              <div>
-                <div class="card">
-                  <div class="section-title">Run analytics</div>
-                  <div class="metric-card slds-m-bottom_small">
-                    <div class="metric-label">Median pass rate (last 10 runs)</div>
-                    <div class="metric-value">
-                      <strong>93%</strong><span class="metric-delta">stable</span>
-                    </div>
+              <!-- KPI row -->
+              <div class="analytics-kpi-row">
+                <div class="analytics-kpi-card">
+                  <div class="analytics-kpi-label">Overall pass rate (last 10 runs)</div>
+                  <div class="analytics-kpi-value">
+                    <strong>93%</strong>
+                    <span class="analytics-kpi-delta">+1.2% vs last week</span>
                   </div>
-                  <div class="metric-card slds-m-bottom_small">
-                    <div class="metric-label">Runs with issues</div>
-                    <div class="metric-value">
-                      <strong>2</strong><span class="metric-delta.warn">needs attention</span>
-                    </div>
-                    <p class="slds-text-body_small slds-m-top_xx-small">
-                      One voice latency spike, one billing hallucination cluster.
-                    </p>
+                </div>
+                <div class="analytics-kpi-card">
+                  <div class="analytics-kpi-label">Failing tests (24h)</div>
+                  <div class="analytics-kpi-value">
+                    <strong>7</strong>
+                    <span class="analytics-kpi-delta bad">3 critical</span>
                   </div>
-                  <div class="metric-card">
-                    <div class="metric-label">Average duration</div>
-                    <div class="metric-value">
-                      <strong>7m 32s</strong><span class="metric-delta">per run</span>
-                    </div>
-                    <p class="slds-text-body_small slds-m-top_xx-small">
-                      Longest runs are full regressions that include voice personas.
-                    </p>
+                </div>
+                <div class="analytics-kpi-card">
+                  <div class="analytics-kpi-label">Avg run duration</div>
+                  <div class="analytics-kpi-value">
+                    <strong>7m 32s</strong>
+                    <span class="analytics-kpi-delta warn">slightly high</span>
                   </div>
-                  <button class="btn-ghost btn-full slds-m-top_small">
-                    Open Run Details &amp; Trends
-                  </button>
+                </div>
+              </div>
+
+              <!-- Charts row -->
+              <div class="analytics-charts-row">
+                <div class="analytics-card-sub">
+                  <div class="analytics-subtitle-label">
+                    Run volume (last 7 days)
+                  </div>
+                  <div class="spark-bars">
+                    <div class="spark-bar" style="height: 90%;"></div>
+                    <div class="spark-bar" style="height: 60%;"></div>
+                    <div class="spark-bar" style="height: 70%;"></div>
+                    <div class="spark-bar" style="height: 50%;"></div>
+                    <div class="spark-bar" style="height: 100%;"></div>
+                    <div class="spark-bar soft" style="height: 35%;"></div>
+                    <div class="spark-bar soft" style="height: 40%;"></div>
+                  </div>
+                  <div class="spark-caption">
+                    Peak test traffic after last deployment; lower volume over weekend.
+                  </div>
+                </div>
+
+                <div class="analytics-card-sub">
+                  <div class="analytics-subtitle-label">
+                    Pass rate trend
+                  </div>
+                  <div class="spark-bars">
+                    <div class="spark-bar" style="height: 80%;"></div>
+                    <div class="spark-bar" style="height: 82%;"></div>
+                    <div class="spark-bar" style="height: 88%;"></div>
+                    <div class="spark-bar" style="height: 90%;"></div>
+                    <div class="spark-bar" style="height: 94%;"></div>
+                    <div class="spark-bar soft" style="height: 92%;"></div>
+                    <div class="spark-bar soft" style="height: 93%;"></div>
+                  </div>
+                  <div class="spark-caption">
+                    Quality improving as new guardrail pack rolled out.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bottom row -->
+              <div class="analytics-bottom-row">
+                <div>
+                  <div class="analytics-subtitle-label">Top failure buckets</div>
+                  <ul class="risk-list">
+                    <li class="risk-item">
+                      <span class="risk-dot bad"></span>
+                      <div>
+                        <span class="risk-tag bad">Critical</span>
+                        Voice latency spike in “Urgent Care Voice” smoke run.
+                      </div>
+                    </li>
+                    <li class="risk-item">
+                      <span class="risk-dot"></span>
+                      <div>
+                        <span class="risk-tag">Quality</span>
+                        Billing hallucinations for coverage questions – campaign flow.
+                      </div>
+                    </li>
+                    <li class="risk-item">
+                      <span class="risk-dot"></span>
+                      <div>
+                        <span class="risk-tag">UX</span>
+                        Abandoned provider search after location confusion.
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+
+                <div>
+                  <div class="analytics-subtitle-label">Channel mix &amp; hotspots</div>
+                  <div class="channel-stack-label">Runs by channel (7 days)</div>
+                  <div class="channel-stack-bar">
+                    <div class="channel-stack-chat"></div>
+                    <div class="channel-stack-voice"></div>
+                  </div>
+                  <div class="channel-stack-legend">
+                    <span><span class="legend-dot chat"></span>Chat · 62%</span>
+                    <span><span class="legend-dot voice"></span>Voice · 38%</span>
+                  </div>
+
+                  <div class="analytics-subtitle-label" style="margin-top: 0.6rem;">
+                    Hotspot intents (last 24h)
+                  </div>
+                  <div class="intent-chips">
+                    <span class="intent-chip">Parking &amp; directions</span>
+                    <span class="intent-chip">Imaging preparation</span>
+                    <span class="intent-chip">Telehealth follow-up</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1109,7 +1431,7 @@
                     <div class="metric-label">Voice UX score</div>
                     <div class="metric-value">
                       <strong>84</strong
-                      ><span class="metric-delta.warn">/100</span>
+                      ><span class="metric-delta warn">/100</span>
                     </div>
                     <p class="slds-text-body_small slds-m-top_xx-small">
                       Latency and barge-in are strong; empathy lags in high-anxiety
@@ -1189,7 +1511,7 @@
                     <div class="metric-label">Intents with drift</div>
                     <div class="metric-value">
                       <strong>7</strong
-                      ><span class="metric-delta.bad">need review</span>
+                      ><span class="metric-delta bad">need review</span>
                     </div>
                     <p class="slds-text-body_small slds-m-top_xx-small">
                       Parking, telehealth, imaging prep – tone and call-to-action have
@@ -1253,7 +1575,7 @@
                     <div class="metric-label">Open review items</div>
                     <div class="metric-value">
                       <strong>14</strong
-                      ><span class="metric-delta.warn">needs triage</span>
+                      ><span class="metric-delta warn">needs triage</span>
                     </div>
                     <p class="slds-text-body_small slds-m-top_xx-small">
                       Mix of hallucination flags, tone issues, and late escalations.
