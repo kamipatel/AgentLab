@@ -105,6 +105,7 @@
       margin: 0;
       padding: 0;
       list-style: none;
+      flex-wrap: wrap;
     }
 
     .tab-item {
@@ -139,6 +140,7 @@
       font-size: 0.7rem;
       color: #9ca3af;
       padding-right: 0.6rem;
+      white-space: nowrap;
     }
 
     /* ---------- Content shells ---------- */
@@ -146,10 +148,6 @@
     .tab-content {
       padding: 1rem 1.4rem 1.4rem;
       background: #f9fafb;
-    }
-
-    .tab-panel {
-      /* toggled via JS by setting hidden true/false */
     }
 
     .card {
@@ -380,6 +378,138 @@
       background: #f9fafb;
     }
 
+    /* ---------- Running Tests & Monitor styles ---------- */
+
+    .run-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .run-card {
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      padding: 0.75rem 0.85rem;
+      background: #ffffff;
+      font-size: 0.8rem;
+    }
+
+    .run-header-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.3rem;
+    }
+
+    .run-name {
+      font-weight: 600;
+    }
+
+    .status-pill {
+      border-radius: 999px;
+      padding: 0.15rem 0.55rem;
+      font-size: 0.72rem;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .status-pill.running {
+      border-color: #3b82f6;
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+
+    .status-pill.queued {
+      border-color: #9ca3af;
+      background: #f3f4f6;
+      color: #4b5563;
+    }
+
+    .status-pill.success {
+      border-color: #16a34a;
+      background: #ecfdf5;
+      color: #15803d;
+    }
+
+    .status-pill.failed {
+      border-color: #dc2626;
+      background: #fef2f2;
+      color: #b91c1c;
+    }
+
+    .progress-bar-outer {
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+      margin: 0.2rem 0 0.35rem;
+    }
+
+    .progress-bar-inner {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #4f46e5, #22c55e);
+      width: 45%; /* sample value, override inline */
+    }
+
+    .run-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      font-size: 0.74rem;
+      color: #6b7280;
+    }
+
+    .run-meta span::before {
+      content: "• ";
+    }
+
+    .run-meta span:first-child::before {
+      content: "";
+    }
+
+    /* table */
+
+    .run-table-card {
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    table.run-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+    }
+
+    .run-table thead {
+      background: #f3f4f6;
+    }
+
+    .run-table th,
+    .run-table td {
+      padding: 0.45rem 0.6rem;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .run-table th {
+      font-weight: 600;
+      color: #4b5563;
+      font-size: 0.75rem;
+    }
+
+    .run-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .run-table td.run-cell-main {
+      white-space: normal;
+    }
+
     /* ---------- Responsive ---------- */
 
     @media (max-width: 900px) {
@@ -398,6 +528,13 @@
 
       .kpi-proposals-wrap {
         grid-template-columns: minmax(0, 1fr);
+      }
+
+      .run-table th:nth-child(4),
+      .run-table td:nth-child(4),
+      .run-table th:nth-child(5),
+      .run-table td:nth-child(5) {
+        display: none; /* hide some cols on narrow screens */
       }
     }
   </style>
@@ -433,8 +570,8 @@
                     <span class="quality-pill">Agent Quality 92.4</span>
                   </div>
                   <p class="slds-text-body_small slds-m-top_xx-small">
-                    A cockpit for chat &amp; voice bots: test suites, performance SLOs,
-                    and insights learned from real patient conversations.
+                    Command center for chat &amp; voice bots: author tests, run them,
+                    monitor performance, and learn from real conversations.
                   </p>
                 </div>
               </div>
@@ -459,6 +596,12 @@
               <a href="#tab-authoring" class="tab-link" role="tab">Authoring</a>
             </li>
             <li class="tab-item" role="presentation">
+              <a href="#tab-running" class="tab-link" role="tab">Running Tests</a>
+            </li>
+            <li class="tab-item" role="presentation">
+              <a href="#tab-monitor" class="tab-link" role="tab">Monitor</a>
+            </li>
+            <li class="tab-item" role="presentation">
               <a href="#tab-voice" class="tab-link" role="tab">Voice</a>
             </li>
             <li class="tab-item" role="presentation">
@@ -480,7 +623,7 @@
               <div class="section-title">Quick actions</div>
               <div class="quick-actions">
                 <div class="quick-chip">
-                  <span>Smoke</span> Run core regression on all bots
+                  <span>Smoke</span> Core regression on all bots
                 </div>
                 <div class="quick-chip">
                   <span>Perf</span> Performance sweep (p95 latency)
@@ -617,7 +760,7 @@
               <div class="kpi-grid slds-m-bottom_small">
                 <div class="kpi-card kpi-card--neutral">
                   <div class="kpi-card__value">0</div>
-                  <div class="kpi-card__label">Tests Executed</div>
+                  <div class="kpi-card__label">Tests Executed (today)</div>
                 </div>
                 <div class="kpi-card kpi-card--success">
                   <div class="kpi-card__value">0</div>
@@ -739,6 +882,191 @@
             </div>
           </section>
 
+          <!-- ===== RUNNING TESTS TAB ===== -->
+          <section id="tab-running" class="tab-panel" hidden>
+            <div class="two-col">
+              <div>
+                <div class="card">
+                  <div class="section-title">Currently running</div>
+                  <div class="run-list">
+                    <div class="run-card">
+                      <div class="run-header-line">
+                        <span class="run-name">ReleaseCheck-2025-11-19-01</span>
+                        <span class="status-pill running">Running</span>
+                      </div>
+                      <div class="progress-bar-outer">
+                        <div class="progress-bar-inner" style="width: 64%;"></div>
+                      </div>
+                      <div class="run-meta">
+                        <span>UCM Cardiology Bot</span>
+                        <span>Suite: Full Regression</span>
+                        <span>118 / 184 tests</span>
+                        <span>p95 so far: 1.5s</span>
+                      </div>
+                    </div>
+
+                    <div class="run-card">
+                      <div class="run-header-line">
+                        <span class="run-name">Smoke-Voice-AfterHours</span>
+                        <span class="status-pill running">Running</span>
+                      </div>
+                      <div class="progress-bar-outer">
+                        <div class="progress-bar-inner" style="width: 37%;"></div>
+                      </div>
+                      <div class="run-meta">
+                        <span>Agentforce Voice</span>
+                        <span>Persona mix: commuter / elderly</span>
+                        <span>11 / 30 calls</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="card">
+                  <div class="section-title">Queue</div>
+                  <div class="run-list">
+                    <div class="run-card">
+                      <div class="run-header-line">
+                        <span class="run-name">PHI-Guardrail-Weekly</span>
+                        <span class="status-pill queued">Queued</span>
+                      </div>
+                      <div class="run-meta">
+                        <span>Scheduled: Tonight 23:00</span>
+                        <span>All bots</span>
+                        <span>Snowflake transcript sync enabled</span>
+                      </div>
+                    </div>
+
+                    <div class="run-card">
+                      <div class="run-header-line">
+                        <span class="run-name">Billing-Campaign-Smoke</span>
+                        <span class="status-pill queued">Queued</span>
+                      </div>
+                      <div class="run-meta">
+                        <span>Environment: UAT</span>
+                        <span>Suite: Billing &amp; Coverage</span>
+                        <span>Priority: Medium</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button class="btn-ghost btn-full slds-m-top_small">
+                    View All Scheduled Runs
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" style="margin-top: 1rem;">
+              <div class="section-title">Run controls (conceptual)</div>
+              <p class="slds-text-body_small">
+                In a real app, actions here would call Apex / Snowflake procedures /
+                Agentforce Testing API to pause, retry, or cancel runs.
+              </p>
+              <div class="quick-actions slds-m-top_small">
+                <div class="quick-chip"><span>Pause</span> All non-critical runs</div>
+                <div class="quick-chip"><span>Retry</span> Only failed tests in last run</div>
+                <div class="quick-chip"><span>Route</span> Long suites to off-peak window</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ===== MONITOR TAB ===== -->
+          <section id="tab-monitor" class="tab-panel" hidden>
+            <div class="two-col">
+              <div>
+                <div class="run-table-card">
+                  <table class="run-table">
+                    <thead>
+                      <tr>
+                        <th>Run</th>
+                        <th>Bot / Intent</th>
+                        <th>Suite</th>
+                        <th>Env</th>
+                        <th>Started</th>
+                        <th>Pass</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="run-cell-main">ReleaseCheck-2025-11-18-02</td>
+                        <td>Cardiology Provider Search</td>
+                        <td>Full Regression</td>
+                        <td>UAT</td>
+                        <td>08:12</td>
+                        <td>94%</td>
+                        <td><span class="status-pill success">Success</span></td>
+                      </tr>
+                      <tr>
+                        <td class="run-cell-main">Voice-Smoke-AfterHours</td>
+                        <td>Urgent Care Voice</td>
+                        <td>Smoke</td>
+                        <td>UAT</td>
+                        <td>09:45</td>
+                        <td>88%</td>
+                        <td><span class="status-pill failed">Issues</span></td>
+                      </tr>
+                      <tr>
+                        <td class="run-cell-main">Billing-Campaign-Drift</td>
+                        <td>Billing Chat</td>
+                        <td>Drift Compare</td>
+                        <td>UAT</td>
+                        <td>Yesterday</td>
+                        <td>91%</td>
+                        <td><span class="status-pill success">Success</span></td>
+                      </tr>
+                      <tr>
+                        <td class="run-cell-main">PHI-Guardrail-Weekly</td>
+                        <td>All bots</td>
+                        <td>Guardrail Pack</td>
+                        <td>Prod</td>
+                        <td>Sun 02:10</td>
+                        <td>100%</td>
+                        <td><span class="status-pill success">Success</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div>
+                <div class="card">
+                  <div class="section-title">Run analytics</div>
+                  <div class="metric-card slds-m-bottom_small">
+                    <div class="metric-label">Median pass rate (last 10 runs)</div>
+                    <div class="metric-value">
+                      <strong>93%</strong><span class="metric-delta">stable</span>
+                    </div>
+                  </div>
+                  <div class="metric-card slds-m-bottom_small">
+                    <div class="metric-label">Runs with issues</div>
+                    <div class="metric-value">
+                      <strong>2</strong><span class="metric-delta.warn">needs attention</span>
+                    </div>
+                    <p class="slds-text-body_small slds-m-top_xx-small">
+                      One voice latency spike, one billing hallucination cluster.
+                    </p>
+                  </div>
+                  <div class="metric-card">
+                    <div class="metric-label">Average duration</div>
+                    <div class="metric-value">
+                      <strong>7m 32s</strong><span class="metric-delta">per run</span>
+                    </div>
+                    <p class="slds-text-body_small slds-m-top_xx-small">
+                      Longest runs are full regressions that include voice personas.
+                    </p>
+                  </div>
+                  <button class="btn-ghost btn-full slds-m-top_small">
+                    Open Run Details &amp; Trends
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
           <!-- ===== VOICE TAB ===== -->
           <section id="tab-voice" class="tab-panel" hidden>
             <div class="two-col">
@@ -781,7 +1109,7 @@
                     <div class="metric-label">Voice UX score</div>
                     <div class="metric-value">
                       <strong>84</strong
-                      ><span class="metric-delta warn">/100</span>
+                      ><span class="metric-delta.warn">/100</span>
                     </div>
                     <p class="slds-text-body_small slds-m-top_xx-small">
                       Latency and barge-in are strong; empathy lags in high-anxiety
@@ -861,7 +1189,7 @@
                     <div class="metric-label">Intents with drift</div>
                     <div class="metric-value">
                       <strong>7</strong
-                      ><span class="metric-delta bad">need review</span>
+                      ><span class="metric-delta.bad">need review</span>
                     </div>
                     <p class="slds-text-body_small slds-m-top_xx-small">
                       Parking, telehealth, imaging prep – tone and call-to-action have
@@ -925,7 +1253,7 @@
                     <div class="metric-label">Open review items</div>
                     <div class="metric-value">
                       <strong>14</strong
-                      ><span class="metric-delta warn">needs triage</span>
+                      ><span class="metric-delta.warn">needs triage</span>
                     </div>
                     <p class="slds-text-body_small slds-m-top_xx-small">
                       Mix of hallucination flags, tone issues, and late escalations.
